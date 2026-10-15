@@ -1,27 +1,80 @@
-{{-- resources/views/recuperar-senha.blade.php --}}
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recuperação de Senha</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-          rel="stylesheet">
+    <title>AdminLTE | Recuperação de Senha</title>
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@fontsource/source-sans-3@5.3.0/index.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+    >
+
+    <style>
+        body {
+            font-family: 'Source Sans 3', sans-serif;
+            background-color: #e9ecef;
+        }
+
+        .login-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-box {
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .login-logo {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .login-logo a {
+            color: #343a40;
+            text-decoration: none;
+        }
+
+        .login-card-body {
+            padding: 25px;
+        }
+
+        .login-box-msg {
+            margin-bottom: 20px;
+            color: #6c757d;
+        }
+    </style>
 </head>
-<body class="bg-light">
 
-<div class="container d-flex justify-content-center align-items-center min-vh-100">
-    <div class="card shadow-sm border-0" style="width: 100%; max-width: 420px;">
-        <div class="card-body p-4">
+<body class="login-page">
 
-            <h3 class="text-center mb-3">
-                <strong>Recuperar</strong> senha
-            </h3>
+<main class="login-box">
 
-            <p class="text-muted">
-                Informe seu e-mail e cadastre uma nova senha.
+    <h1 class="login-logo">
+        <a href="{{ url('/') }}"><b>Admin</b>LTE</a>
+    </h1>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body login-card-body">
+
+            <p class="login-box-msg">
+                Esqueceu sua senha? Informe seu e-mail e cadastre uma nova senha.
             </p>
 
             @if (session('success'))
@@ -43,57 +96,85 @@
             <form action="{{ route('senha.alterar') }}" method="POST">
                 @csrf
 
-                <div class="mb-3">
-                    <label for="email" class="form-label">E-mail</label>
+                <label class="visually-hidden" for="email">E-mail</label>
+
+                <div class="input-group mb-3">
                     <input
+                        id="email"
                         type="email"
                         name="email"
-                        id="email"
                         class="form-control"
+                        placeholder="E-mail"
                         value="{{ old('email') }}"
-                        placeholder="Digite seu e-mail"
                         required
                     >
+
+                    <span class="input-group-text">
+                        <i class="bi bi-envelope"></i>
+                    </span>
                 </div>
 
-                <div class="mb-3">
-                    <label for="password" class="form-label">Nova senha</label>
+                <label class="visually-hidden" for="password">
+                    Nova senha
+                </label>
+
+                <div class="input-group mb-3">
                     <input
+                        id="password"
                         type="password"
                         name="password"
-                        id="password"
                         class="form-control"
-                        placeholder="Digite a nova senha"
+                        placeholder="Nova senha"
                         required
                     >
+
+                    <span class="input-group-text">
+                        <i class="bi bi-lock"></i>
+                    </span>
                 </div>
 
-                <div class="mb-3">
-                    <label for="password_confirmation" class="form-label">
-                        Confirmar nova senha
-                    </label>
+                <label class="visually-hidden" for="password_confirmation">
+                    Confirmar senha
+                </label>
+
+                <div class="input-group mb-3">
                     <input
+                        id="password_confirmation"
                         type="password"
                         name="password_confirmation"
-                        id="password_confirmation"
                         class="form-control"
-                        placeholder="Repita a nova senha"
+                        placeholder="Confirmar nova senha"
                         required
                     >
+
+                    <span class="input-group-text">
+                        <i class="bi bi-lock-fill"></i>
+                    </span>
                 </div>
 
-                <button type="submit" class="btn btn-primary w-100">
-                    Alterar senha
-                </button>
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary">
+                        Alterar senha
+                    </button>
+                </div>
             </form>
 
-            <div class="text-center mt-3">
+            <p class="mt-3 mb-1">
                 <a href="{{ url('/login') }}">Voltar para o login</a>
-            </div>
+            </p>
+
+            <p class="mb-0">
+                <a href="{{ url('/register') }}">
+                    Cadastrar novo usuário
+                </a>
+            </p>
 
         </div>
     </div>
-</div>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
