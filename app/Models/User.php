@@ -34,7 +34,6 @@ class User extends Authenticatable
     {
 
         return  User::find($id);
-
     }
 
     public function getAll()
@@ -42,7 +41,8 @@ class User extends Authenticatable
         return self::all();
     }
 
-    public function profile(){
-      return $this->hasOne(Profile::class);
+    public function profile()
+    {
+        return $this->hasOne(Profile::class);
     }
 }
