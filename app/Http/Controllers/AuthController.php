@@ -26,9 +26,14 @@ class AuthController extends Controller
             ]);
         }
 
+
         $request->session()->regenerate();
 
-        return redirect()->intended('/');
+        $destino = Auth::user()->profile?->type === 'admin'
+            ? route('admin.users.index')
+            : route('home');
+
+        return redirect()->intended($destino);
     }
 
     public function logout(Request $request)

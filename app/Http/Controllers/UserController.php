@@ -10,7 +10,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::paginate(5);
+        $users = User::with('profile')->paginate(5);
 
         return view('user.index', [
             'users' => $users,
@@ -56,5 +56,38 @@ class UserController extends Controller
         return redirect()
             ->route('login')
             ->with('success', 'Cadastro realizado com sucesso! Faça seu login.');
+    }
+
+    public function adminCreate()
+    {
+        return view('user.create', [
+            'administrativo' => true,
+        ]);
+    }
+
+    public function adminStore(Request $request)
+    {
+        $input = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255', 'unique:users,email'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+
+        DB::transaction(function () use ($input) {
+            $user = User::create([
+                'name' => $input['name'],
+                'email' => $input['email'],
+                'password' => $input['password'],
+            ]);
+
+            $user->profile()->create([
+                'type' => 'comum',
+                'description' => 'Usuário comum do sistema',
+            ]);
+        });
+
+        return redirect()
+            ->route('admin.users.index')
+            ->with('success', 'Usuário cadastrado com sucesso!');
     }
 }

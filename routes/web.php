@@ -15,11 +15,10 @@ Route::middleware('guest')->group(function () {
 
 
     Route::get('/register', [UserController::class, 'register'])
-    ->name('register');
+        ->name('register');
 
     Route::post('/store', [UserController::class, 'create'])
-    ->name('register.store');
-
+        ->name('register.store');
 });
 
 Route::middleware('auth')->group(function () {
@@ -38,4 +37,16 @@ Route::middleware(['auth', 'admin'])
         Route::get('/', function () {
             return view('admin.dashboard');
         })->name('dashboard');
+
+        Route::get('/users', [UserController::class, 'index'])
+            ->name('users.index');
+
+        Route::get('/users/create', [UserController::class, 'adminCreate'])
+            ->name('users.create');
+
+        Route::get('/users/{id}', [UserController::class, 'show'])
+            ->name('users.show');
+
+        Route::post('/users', [UserController::class, 'adminStore'])
+            ->name('users.store');
     });
